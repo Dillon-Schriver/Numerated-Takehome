@@ -27,7 +27,7 @@ class RouteInfo():
         else:
             print(response.status_code)
             print('Request error')
-            return ['Error']
+            return ['Error', 'Error']
 
     # Handle stops for a given route selection from user
     def get_specific_stops(self, route):
@@ -63,13 +63,16 @@ class RouteInfo():
         # Otherwise, catch error
         else:
             print('Request error - Stops')
-            print(response.status_code)
+            # print(response.status_code)
             return ['Error']
 
     # Return the nearest predicted train given a route, direction, and stop as query parameters
     def get_predicted_arrival(self, route, direction, stop):
-        print
-        temp =self.stop_ids[stop]
+        # check for valid stop, this must be included in stop_ids as we recorded in dictionary on previous calls
+        if stop in self.stop_ids:
+            temp =self.stop_ids[stop]
+        else:
+            return "Invalid Stop"
         stopid = str(temp)
         # print(type(stopid))
         # print(stopid)
@@ -84,6 +87,6 @@ class RouteInfo():
 
             # if something went wrong and we failed, just return generic response
         else:
-            return ['Error']
+            return 'Error'
 
     

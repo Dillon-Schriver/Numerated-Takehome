@@ -1,5 +1,16 @@
-import Data
 import sys
+import Data
+""" 
+Main method - run Main.py to interact with the finished challenge and recieve data for each of the 4 requirements
+
+This is a very simple text-based user prompt to get and supply the required information
+    Key additions we could discuss: 
+        user input handling (e.g. testing for malformed input) and general error handling
+        Front-end additions or prettier formatting
+        More robust testing
+    """
+
+
 def main():
     running = True
     rt = Data.RouteInfo()
