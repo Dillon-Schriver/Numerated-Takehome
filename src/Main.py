@@ -13,10 +13,18 @@ def main():
         # TODO - add direction prompt!
 
         print("Please Type EXIT to quit at any time")
-        route_prompt ="\nPlease Enter a Route, your choices are:{routes}".format(routes=rt.get_rail_options()) 
+        routes, directions = rt.get_rail_options()
+        route_prompt ="\nPlease Enter a Route, your choices are:{r}".format(r=routes) 
         route = input(route_prompt)
         if route.lower() == "exit": break
         print("\nrecieved",route)
+        
+        dir_prompt ="\nPlease Enter a direction, your choices are:{d}".format(d=directions[route]) 
+        dir = input(dir_prompt)
+        if route.lower() == "exit": break
+        print("\nrecieved",dir)
+        # convert to numeric
+        dir = directions[route].index(dir) 
 
         stop_prompt ="\nYou selected{r}, what stop would you like to select?:{stops}" \
             .format(r=route, stops=rt.get_specific_stops(route))
@@ -25,11 +33,11 @@ def main():
         print("\nrecieved",stop)
 
         print("\nOk, for route {r}, at stop {s} , the next train is departing at: {t}" \
-            .format(r=route, s=stop, t=rt.get_predicted_arrival(route,"1",stop)))
+            .format(r=route, s=stop, t=rt.get_predicted_arrival(route,str(dir),stop)))
         print("You'd better hurry!")
         print()
         final = input("Press any button to continue or EXIT to quit")
-        if stop.lower() == "exit": break
+        if stop.lower() == "exit": return
         # break
 
 

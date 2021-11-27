@@ -6,8 +6,9 @@ class RouteInfo():
 
         # reference data
         self.stop_ids = {}
-        self.routes = []
-
+        self.routes = set()
+        # assumption - this is unchanging
+        self.directions = {}
         # Default route - serve our HTML and corresponding JS for frontend
     # Handle our rail information requets - serve light and heavy rail routes
     def get_rail_options(self):
@@ -21,7 +22,8 @@ class RouteInfo():
             for route in result["data"]:
                 if route['attributes']['type'] == 1 or route['attributes']['type'] == 0:
                     light_or_heavy.append(route['id'])
-            return (light_or_heavy)
+                    self.directions[route['id']] = route['attributes']['direction_names'] 
+            return [(light_or_heavy), self.directions]
         else:
             print(response.status_code)
             print('Request error')
@@ -69,7 +71,8 @@ class RouteInfo():
         print
         temp =self.stop_ids[stop]
         stopid = str(temp)
-        print(stopid)
+        # print(type(stopid))
+        # print(stopid)
         call = self.MBTA_API + "predictions?sort[arrival_time],filter[stop]=" + stopid + "&filter[direction_id]="+direction +"&filter[route]="+route
         result = requests.get(call).json()
         if result:
